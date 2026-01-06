@@ -2,11 +2,14 @@ import os
 from fastapi import FastAPI,HTTPException
 from dotenv import load_dotenv
 from openai import OpenAI
-
+from fastapi.middleware.cors import CORSMiddleware
 load_dotenv()
 # openai
 client = OpenAI(api_key=os.getenv("OPEN_AI_KEY"))
 app = FastAPI()
+app.add_middleware(CORSMiddleware,
+                   allow_methods=["*"],allow_origins=["*"]
+                   )
 @app.post("/")
 async def quote_generate():
      try:
